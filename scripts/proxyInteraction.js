@@ -1,15 +1,14 @@
 const hre = require("hardhat");
 require("dotenv").config();
 
-let implementationABI;
 let proxy;
 let signerModerator;
 
 async function main() {
-  try {
-    // Provider instance to be initiated at particular url
-    const provider = new hre.ethers.JsonRpcProvider(process.env.PROVIDER_URL);
+  // Provider instance to be initiated at particular url
+  const provider = new hre.ethers.JsonRpcProvider(process.env.PROVIDER_URL);
 
+  try {
     // Initiate the signer as moderator for carrying out transaction over the proxy contracts
     // @dev -- make sure to paste the moderator's private key to the .env file
     signerModerator = new hre.ethers.Wallet(
@@ -23,7 +22,6 @@ async function main() {
   } catch (err) {
     console.log("Error while setting contract factory ", err);
   }
-
   // call the testcases function with the required function signature that you want to add to the proxy contract
 
   // @dev - make sure to insert the function signature along with parameters with no spaces (eg. transfer(address,uint256))
@@ -37,6 +35,7 @@ async function main() {
     console.log("Initialization error", err);
   }
 
+  
   // For example interaction we have added mintToken(uint256) function signature
   try {
     const mintHash = await testCases("mintToken(uint256)");
